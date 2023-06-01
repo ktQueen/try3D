@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-05-31 20:08:56
- * @LastEditTime: 2023-06-01 10:12:44
+ * @LastEditTime: 2023-06-01 10:20:43
  */
 import * as THREE from "three";
 // 导入轨道控制器
@@ -52,10 +52,14 @@ console.log("renderer", renderer);
 document.body.appendChild(renderer.domElement);
 
 //使用渲染器，通过相机将场景渲染进来
-renderer.render(scene, camera);
+// renderer.render(scene, camera);
 
 // 创建轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement);
+
+// 添加坐标轴辅助器
+const axesHelper = new THREE.AxesHelper(5);
+scene.add(axesHelper);
 
 // 渲染函数
 function render() {
