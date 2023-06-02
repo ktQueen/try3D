@@ -1,7 +1,12 @@
 /*
  * @Description:
+ * @Date: 2023-06-02 10:29:01
+ * @LastEditTime: 2023-06-02 10:29:02
+ */
+/*
+ * @Description:
  * @Date: 2023-05-31 20:08:56
- * @LastEditTime: 2023-06-02 14:34:36
+ * @LastEditTime: 2023-06-02 10:22:42
  */
 import * as THREE from "three";
 // 导入轨道控制器
@@ -10,21 +15,14 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import gsap from "gsap";
 // 导入dat.gui,轻量级ui界面控制库，帮助我们快速的设置变量，修改里面的值和数据
 import * as dat from "dat.gui";
-// 导入hdr图
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
-//加载hdr环境图
-const rgbelLoader = new RGBELoader();
-rgbelLoader.loadAsync("textures/door/search-smart.png").then((texture) => {
-  console.log(texture);
-  texture.mapping = THREE.EquirectangularReflectionMapping; //纹理映射
-  scene.background = texture;
-  scene.environment = texture;
-});
+// console.log("THREE1", THREE);
+
 //目标：加载进度
 
 // 1.创建场景
 const scene = new THREE.Scene();
+
 // 2.创建相机
 //透视相机
 // PerspectiveCamera( fov : Number , aspect : Number , near : Number , far : Number )
@@ -54,7 +52,7 @@ const envMapTexture = cubeTextureLoader.load([
   "./textures/door/search-smart.png",
 ]);
 const sphereGeometry = new THREE.SphereBufferGeometry(1, 20, 20);
-// // 材质
+// 材质
 const material = new THREE.MeshStandardMaterial({
   metalness: 0.7,
   roughness: 0.1,
@@ -63,9 +61,9 @@ const material = new THREE.MeshStandardMaterial({
 const sphere = new THREE.Mesh(sphereGeometry, material);
 scene.add(sphere);
 // 给场景添加背景
-// scene.background = envMapTexture;
+scene.background = envMapTexture;
 // 给场景所有的物体添加默认的环境贴图
-// scene.environment = envMapTexture;
+scene.environment = envMapTexture;
 
 //灯光
 // 环境光:四面八方打过来的，没有方向

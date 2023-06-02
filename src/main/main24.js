@@ -1,5 +1,10 @@
 /*
  * @Description:
+ * @Date: 2023-06-02 14:48:21
+ * @LastEditTime: 2023-06-02 14:48:43
+ */
+/*
+ * @Description:
  * @Date: 2023-05-31 20:08:56
  * @LastEditTime: 2023-06-02 14:34:36
  */
@@ -13,15 +18,7 @@ import * as dat from "dat.gui";
 // 导入hdr图
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
-//加载hdr环境图
-const rgbelLoader = new RGBELoader();
-rgbelLoader.loadAsync("textures/door/search-smart.png").then((texture) => {
-  console.log(texture);
-  texture.mapping = THREE.EquirectangularReflectionMapping; //纹理映射
-  scene.background = texture;
-  scene.environment = texture;
-});
-//目标：加载进度
+//目标：聚光灯
 
 // 1.创建场景
 const scene = new THREE.Scene();
