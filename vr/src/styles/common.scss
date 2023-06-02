@@ -1,0 +1,46 @@
+@import "./reset.scss";
+@import "./theme.scss";
+// 公共样式
+.main-content {
+  margin: 10px;
+  padding: 10px;
+  background: #fff;
+  //表格
+  .table-container {
+    min-height: 200px;
+    &.el-table th.el-table__cell {
+      background-color: #fafafa;
+      border-top: 1px solid rgb(235, 238, 245);
+      color: $deeper-black-color;
+      padding: 14px 0 14px;
+      &:first-child {
+        border-left: 1px solid rgb(235, 238, 245) !important;
+      }
+      &:last-child {
+        border-right: 1px solid rgb(235, 238, 245);
+      }
+    }
+    //文字链接
+    .el-button.is-link span {
+      font-size: 14px;
+      white-space: normal;
+      text-align: left;
+      line-height: 18px;
+      padding: 10px 0;
+    }
+  }
+}
+//tabs
+.tabs-container {
+  &.el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
+    position: relative;
+    &::before {
+      content: "";
+      width: 100%;
+      position: absolute;
+      left: 0;
+      border-top: 2px solid #0070cc;
+      top: 0;
+    }
+  }
+}
