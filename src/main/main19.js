@@ -1,7 +1,12 @@
 /*
  * @Description:
+ * @Date: 2023-06-01 19:28:26
+ * @LastEditTime: 2023-06-01 19:30:40
+ */
+/*
+ * @Description:
  * @Date: 2023-05-31 20:08:56
- * @LastEditTime: 2023-06-01 20:31:09
+ * @LastEditTime: 2023-06-01 19:28:06
  */
 import * as THREE from "three";
 // 导入轨道控制器
@@ -13,7 +18,7 @@ import * as dat from "dat.gui";
 
 // console.log("THREE1", THREE);
 
-//目标：加载进度
+//目标：置换贴图
 
 // 1.创建场景
 const scene = new THREE.Scene();
@@ -36,50 +41,9 @@ camera.position.set(0, 0, 10);
 // 把相机添加到场景当中
 scene.add(camera);
 
-var div = document.createElement("div");
-div.style.width = "200px";
-div.style.height = "200px";
-div.style.position = "fixed";
-div.style.right = 0;
-div.style.top = 0;
-div.style.color = "#fff";
-document.body.appendChild(div);
-
-// 单张纹理图的加载进度
-let event = {};
-event.onLoad = function () {
-  console.log("图片加载完成");
-};
-event.onProgress = function (url, num, total) {
-  console.log(
-    "加载进度",
-    url, //地址
-    num, //加载进度
-    total, //总数
-    ((num / total) * 100).toFixed(2) + "%" //百分比
-  );
-  div.innerHTML = ((num / total) * 100).toFixed(2) + "%";
-};
-event.onError = function (e) {
-  console.log("错误", e);
-};
-// 设置加载管理器
-const loadingManager = new THREE.LoadingManager(
-  event.onLoad,
-  event.onProgress,
-  event.onError
-);
-
 // 导入纹理,官方提供的纹理加载器，实际是加载图片的一个加载器
-const textureLoader = new THREE.TextureLoader(loadingManager);
-const doorColorTexture = textureLoader.load(
-  "./textures/door/search-smart.png"
-  // 单个的加载
-  // event.onLoad,
-  // event.onProgress,
-  // event.onError
-);
-
+const textureLoader = new THREE.TextureLoader();
+const doorColorTexture = textureLoader.load("./textures/door/search-smart.png");
 const doorAplhaTexture = textureLoader.load("./textures/door/search-smart.png");
 const doorAoTexture = textureLoader.load("./textures/door/search-smart.png"); //环境遮挡贴图
 
@@ -87,12 +51,6 @@ const doorAoTexture = textureLoader.load("./textures/door/search-smart.png"); //
 const doorHeightTexture = textureLoader.load(
   "./textures/door/search-smart.png"
 );
-// 导入粗糙度贴图
-const roughnessTexture = textureLoader.load("./textures/door/search-smart.png");
-// 导入金属贴图
-const metalnessTexture = textureLoader.load("./textures/door/search-smart.png");
-// 导入法线贴图
-const normalTexture = textureLoader.load("./textures/door/search-smart.png");
 
 //添加物体
 const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1, 100, 100, 100);
@@ -103,13 +61,9 @@ const material = new THREE.MeshStandardMaterial({
   alphaMap: doorAplhaTexture,
   transparent: true,
   aoMap: doorAoTexture,
-  aoMapIntensity: 1, //强度
+  aoMapIntensity: 0.5, //强度
   displacementMap: doorHeightTexture,
-  displacementScale: 0.1,
-  roughness: 1, //粗糙度
-  roughnessMap: roughnessTexture,
-  metalnessMap: metalnessTexture, // 金属贴图
-  normalMap: normalTexture,
+  displacementScale: 0.5,
   // opacity: 0.5,
   // side: THREE.DoubleSide, //设置两面
 });
@@ -122,7 +76,7 @@ const planeGeometry = new THREE.PlaneBufferGeometry(1, 1, 100, 100, 100);
 const plane = new THREE.Mesh(planeGeometry, material);
 plane.position.set(1.5, 0, 0);
 scene.add(plane);
-// console.log("plane", plane);
+console.log("plane", plane);
 // 给平面设置第二组uv
 cubeGeometry.setAttribute(
   "uv2",
