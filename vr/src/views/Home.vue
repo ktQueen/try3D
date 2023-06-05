@@ -1,3 +1,8 @@
+<!--
+ * @Description: 
+ * @Date: 2023-06-05 17:53:51
+ * @LastEditTime: 2023-06-05 18:13:19
+-->
 <template>
   <div class="container" ref="container"></div>
 </template>
@@ -6,6 +11,7 @@
 import * as THREE from "three";
 import { ref, onMounted } from "vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
 // 初始化场景
 const scene = new THREE.Scene();
@@ -33,26 +39,37 @@ const render = () => {
   requestAnimationFrame(render);
 };
 
-// 添加立方体
-const geometry = new THREE.BoxGeometry(10, 10, 10);
-// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-// const cube = new THREE.Mesh(geometry, material);
+// // 添加立方体
+// const geometry = new THREE.BoxGeometry(10, 10, 10);
+// // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+// // const cube = new THREE.Mesh(geometry, material);
+// // scene.add(cube);
+
+// // 添加球体
+// var arr = ["4_b", "4_f", "4_u", "4_d", "4_l", "4_r"];
+// var boxMaterials = [];
+
+// arr.forEach((item) => {
+//   //纹理加载
+//   let texture = new THREE.TextureLoader().load(`./imgs/living/${item}.jpeg`);
+//   // 创建材质
+//   boxMaterials.push(new THREE.MeshBasicMaterial({ map: texture }));
+// });
+// const cube = new THREE.Mesh(geometry, boxMaterials);
+// cube.geometry.scale(1, 1, -1);
 // scene.add(cube);
+// // cube.material = boxMaterials;
 
-// 添加球体
-var arr = ["4_b", "4_f", "4_u", "4_d", "4_l", "4_r"];
-var boxMaterials = [];
-
-arr.forEach((item) => {
-  //纹理加载
-  let texture = new THREE.TextureLoader().load(`./imgs/living/${item}.jpeg`);
-  // 创建材质
-  boxMaterials.push(new THREE.MeshBasicMaterial({ map: texture }));
+// 添加球
+const geometry = new THREE.SphereGeometry(5, 32, 32);
+const loader = new RGBELoader();
+loader.load(`./imgs/living/4_b.jpeg`, (texture) => {
+  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const sphere = new THREE.Mesh(geometry, material);
+  sphere.geometry.scale(1, 1, -1);
+  scene.add(sphere);
 });
-const cube = new THREE.Mesh(geometry, boxMaterials);
-cube.geometry.scale(1, 1, -1);
-scene.add(cube);
-// cube.material = boxMaterials;
+new THREE.TextureLoader().load();
 
 // 挂载完毕之后获取dom
 onMounted(() => {
