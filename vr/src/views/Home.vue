@@ -11,16 +11,19 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 const scene = new THREE.Scene();
 // 初始化相机
 const camera = new THREE.PerspectiveCamera(
-  75,
+  60,
   window.innerHeight / window.innerWidth,
   0.1,
-  1000
+  100
 );
 // 设置相机位置
-camera.position.z = 5;
+camera.position.z = 0.1;
 // 初始化渲染器
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({
+  antialias: true, //抗锯齿
+});
 // 设置渲染器尺寸
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const container = ref(null);
@@ -31,13 +34,25 @@ const render = () => {
 };
 
 // 添加立方体
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+const geometry = new THREE.BoxGeometry(10, 10, 10);
+// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+// const cube = new THREE.Mesh(geometry, material);
+// scene.add(cube);
 
 // 添加球体
-var arr = ["4_b", "4_f", "4_l", "4_r", "4-u", "4-d"];
+var arr = ["4_b", "4_f", "4_u", "4_d", "4_l", "4_r"];
+var boxMaterials = [];
+
+arr.forEach((item) => {
+  //纹理加载
+  let texture = new THREE.TextureLoader().load(`./imgs/living/${item}.jpeg`);
+  // 创建材质
+  boxMaterials.push(new THREE.MeshBasicMaterial({ map: texture }));
+});
+const cube = new THREE.Mesh(geometry, boxMaterials);
+cube.geometry.scale(1, 1, -1);
+scene.add(cube);
+// cube.material = boxMaterials;
 
 // 挂载完毕之后获取dom
 onMounted(() => {
