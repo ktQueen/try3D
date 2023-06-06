@@ -250,6 +250,7 @@ onMounted(() => {
 
   document.addEventListener("mousemove", function (e) {
     var mousecoords = getMousePos(e);
+    console.log("mousecoords", mousecoords);
     if (neck && waist) {
       moveJoint(mousecoords, neck, 50);
       moveJoint(mousecoords, waist, 30);

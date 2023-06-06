@@ -11,6 +11,8 @@
     "ammo.js": "^0.0.10",
     "ammojs-typed": "^1.0.6",
     "core-js": "^3.6.5",
+    "dat.gui": "^0.7.9",
+    "npm-gui": "^4.0.4",
     "three": "^0.153.0",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
