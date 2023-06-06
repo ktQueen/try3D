@@ -25,3 +25,4 @@ pnpm-debug.log*
 .history
 package-lock.json
 .parcel-cache
+**/models
